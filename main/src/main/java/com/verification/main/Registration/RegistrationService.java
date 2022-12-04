@@ -1,5 +1,8 @@
 package com.verification.main.Registration;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class RegistrationService {
 
 
