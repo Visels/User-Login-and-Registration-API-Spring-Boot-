@@ -1,6 +1,7 @@
 package com.verification.main.appUser;
 
 import com.verification.main.Registration.Token.ConfirmationToken;
+import com.verification.main.Registration.Token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +23,7 @@ public class AppUserService implements UserDetailsService {
     @Autowired
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    private final ConfirmationTokenService confirmationTokenService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -65,6 +66,11 @@ public class AppUserService implements UserDetailsService {
                 appUser
         );
 
-        return "it works";
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+
+//        TODO: SEND MAIL
+
+        return token;
     }
 }
