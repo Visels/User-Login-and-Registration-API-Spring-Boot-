@@ -1,14 +1,13 @@
 package com.verification.main.Registration.Token;
 
+import com.verification.main.appUser.AppUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
@@ -16,26 +15,36 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class ConfirmationToken {
 
-
+@SequenceGenerator(
+        name = "confirmation_sequence_token",
+        sequenceName = "confirmation_sequence_token",
+        allocationSize = 1
+)
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "student_sequence"
-    )
-    Long id;
+    )@Column(nullable =false)
     private String token;
+
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @Column(nullable = false)
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
 
+    @ManyToOne
+    private AppUser appUser;
 
-    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt, LocalDateTime confirmedAT){
+    public ConfirmationToken(AppUser appUser,String token, LocalDateTime createdAt, LocalDateTime expiresAt, LocalDateTime confirmedAT){
         this.token = token;
         this.createdAt  = createdAt;
         this.confirmedAt = confirmedAt;
         this.expiresAt = expiresAt;
+        this.appUser = appUser;
     }
 }
