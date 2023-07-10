@@ -1,1 +1,1 @@
-This is a simple login and user verification back-end service using spring-boot.
+This is a simple login and user verification API service using spring-boot.
